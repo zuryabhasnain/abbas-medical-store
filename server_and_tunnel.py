@@ -18,7 +18,6 @@ class PharmacyHTTPHandler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=BASE_DIR, **kwargs)
 
     def end_headers(self):
-        # Enable CORS and disable cache issues for development updates
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Cache-Control', 'no-cache, must-revalidate')
         super().end_headers()
@@ -33,7 +32,6 @@ class PharmacyHTTPHandler(http.server.SimpleHTTPRequestHandler):
         return super().guess_type(path)
 
     def log_message(self, format, *args):
-        # Concise logging
         sys.stderr.write(f"[HTTP {time.strftime('%H:%M:%S')}] {args[0]} - {args[1]}\n")
 
 def start_http_server():
@@ -43,7 +41,7 @@ def start_http_server():
     server.serve_forever()
 
 def keep_alive_worker(url, stop_event):
-    print(f"[KeepAlive] Started pinger for {url}", flush=True)
+    print(f"[KeepAlive] Health check pinger started for {url}", flush=True)
     while not stop_event.is_set():
         try:
             req = urllib.request.Request(
@@ -54,7 +52,7 @@ def keep_alive_worker(url, stop_event):
                 _ = resp.read(512)
         except Exception:
             pass
-        for _ in range(20):
+        for _ in range(15):
             if stop_event.is_set():
                 break
             time.sleep(1)
@@ -70,7 +68,7 @@ def run_tunnel():
     ]
 
     while True:
-        print("[Tunnel] Connecting to localhost.run public HTTPS relay...", flush=True)
+        print("[Tunnel] Connecting to localhost.run relay...", flush=True)
         proc = subprocess.Popen(
             ssh_cmd,
             stdout=subprocess.PIPE,
@@ -91,10 +89,10 @@ def run_tunnel():
                 match = re.search(r'https://[a-zA-Z0-9\-]+\.lhr\.life', line)
                 if match and not tunnel_url:
                     tunnel_url = match.group(0)
-                    print(f"\n{'='*60}", flush=True)
+                    print(f"\n{'='*70}", flush=True)
                     print(f"🎉 ABBAS MEDICAL STORE LIVE PUBLIC LINK IS READY:", flush=True)
                     print(f"👉 {tunnel_url}", flush=True)
-                    print(f"{'='*60}\n", flush=True)
+                    print(f"{'='*70}\n", flush=True)
                     with open(URL_FILE, "w") as f:
                         f.write(tunnel_url + "\n")
 
@@ -106,7 +104,7 @@ def run_tunnel():
                     keepalive_thread.start()
 
             proc.wait()
-            print(f"[Tunnel] SSH tunnel disconnected with code {proc.returncode}", flush=True)
+            print(f"[Tunnel] Disconnected with code {proc.returncode}", flush=True)
         except Exception as e:
             print(f"[Tunnel] Exception: {e}", flush=True)
         finally:
@@ -120,10 +118,7 @@ def run_tunnel():
         time.sleep(3)
 
 if __name__ == "__main__":
-    # Start HTTP server in background thread
     http_thread = threading.Thread(target=start_http_server, daemon=True)
     http_thread.start()
     time.sleep(1)
-
-    # Start Tunnel manager in main thread
     run_tunnel()
