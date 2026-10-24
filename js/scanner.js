@@ -309,7 +309,7 @@ const ScannerModule = {
         <button class="test-chip" data-barcode="${p.barcode}" title="Click to test scan ${p.name}">
           <span>💊</span>
           <strong>${p.name}</strong>
-          <span style="opacity: 0.6; font-size: 0.7rem;">(${p.barcode})</span>
+          <span class="chip-price">Rs. ${p.salePrice}</span>
         </button>
       `).join('');
 
