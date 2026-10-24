@@ -1,27 +1,65 @@
 {
   "name": "Abbas Medical Store",
   "short_name": "Abbas Medical",
-  "description": "Pharmacy POS, Mobile Barcode Camera Scanner & WhatsApp Digital Invoicing",
+  "description": "Pharmacy POS, Mobile Barcode Camera Scanner & WhatsApp Digital Invoicing - Abbas Medical Store",
   "id": "abbas-medical-store-pos",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
-  "background_color": "#0b0f19",
-  "theme_color": "#059669",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "lang": "en",
+  "dir": "ltr",
   "categories": ["medical", "business", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "./icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "./icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Sale",
+      "short_name": "Sell",
+      "description": "Open POS counter to make a sale",
+      "url": "./index.html#pos",
+      "icons": [{"src": "./icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Scan Barcode",
+      "short_name": "Scanner",
+      "description": "Open camera barcode scanner",
+      "url": "./index.html#scanner",
+      "icons": [{"src": "./icons/icon-192.png", "sizes": "192x192"}]
     }
   ]
 }
