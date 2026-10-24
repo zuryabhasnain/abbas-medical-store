@@ -173,31 +173,46 @@
             <span>Customer & Payment Details</span>
           </div>
 
-          <!-- Customer Form (Optional) -->
-          <div class="customer-box">
-            <div class="form-group">
-              <label class="form-label" for="pos-customer-name">
-                <span>Customer / Patient Name</span>
-                <span class="optional-tag">Optional</span>
-              </label>
-              <input type="text" id="pos-customer-name" class="form-input" placeholder="e.g. Muhammad Ali" autocomplete="off">
-            </div>
+          <!-- Optional Customer Form (Compact Accordion on mobile) -->
+          <details class="customer-accordion" id="pos-customer-accordion">
+            <summary class="customer-accordion-summary">
+              <div class="summary-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Customer & WhatsApp (Optional)</span>
+              </div>
+              <span class="summary-chevron">▼</span>
+            </summary>
+            <div class="customer-box">
+              <div class="form-group">
+                <label class="form-label" for="pos-customer-name">
+                  <span>Customer / Patient Name</span>
+                  <span class="optional-tag">Optional</span>
+                </label>
+                <input type="text" id="pos-customer-name" class="form-input" placeholder="e.g. Muhammad Ali" autocomplete="off">
+              </div>
 
-            <div class="form-group">
-              <label class="form-label" for="pos-customer-phone">
-                <span>WhatsApp / Mobile Number</span>
-                <span class="optional-tag">Optional (for WhatsApp Invoice)</span>
-              </label>
-              <input type="tel" id="pos-customer-phone" class="form-input" placeholder="e.g. 0300 1234567" autocomplete="off">
+              <div class="form-group">
+                <label class="form-label" for="pos-customer-phone">
+                  <span>WhatsApp / Mobile Number</span>
+                  <span class="optional-tag">For WhatsApp Invoice</span>
+                </label>
+                <input type="tel" id="pos-customer-phone" class="form-input" placeholder="e.g. 0300 1234567" autocomplete="off">
+              </div>
             </div>
+          </details>
 
+          <!-- Payment Mode & Discount Grid -->
+          <div class="payment-method-row">
             <div class="form-grid-2">
               <div class="form-group">
                 <label class="form-label" for="pos-payment-method">Payment Mode</label>
                 <select id="pos-payment-method" class="form-input">
                   <option value="Cash">Cash</option>
-                  <option value="Card">Credit/Debit Card</option>
-                  <option value="Easypaisa/JazzCash">Mobile Wallet (Easypaisa/JazzCash)</option>
+                  <option value="Card">Card</option>
+                  <option value="Easypaisa/JazzCash">JazzCash / Easy</option>
                   <option value="Credit / Khata">Credit / Khata</option>
                 </select>
               </div>
@@ -246,6 +261,18 @@
             <button class="btn-clear-cart" id="btn-clear-cart">Clear Current Cart</button>
           </div>
         </div>
+      </div>
+
+      <!-- Sticky Mobile Checkout Bar -->
+      <div class="mobile-sticky-checkout-bar" id="mobile-sticky-checkout-bar" style="display: none;">
+        <div class="sticky-bill-info">
+          <span class="sticky-bill-items" id="sticky-bill-count">0 items</span>
+          <span class="sticky-bill-total" id="sticky-bill-total">Rs. 0.00</span>
+        </div>
+        <button class="btn-sticky-checkout" id="btn-sticky-checkout">
+          <span>Complete & WhatsApp</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
     </section>
 

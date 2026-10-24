@@ -80,6 +80,12 @@ const PosModule = {
     if (printCheckoutBtn) {
       printCheckoutBtn.addEventListener('click', () => this.processCheckout('print'));
     }
+
+    // Trigger Mobile Sticky Checkout Button
+    const stickyCheckoutBtn = document.getElementById('btn-sticky-checkout');
+    if (stickyCheckoutBtn) {
+      stickyCheckoutBtn.addEventListener('click', () => this.processCheckout('whatsapp'));
+    }
   },
 
   handleManualBarcodeEntry(query) {
@@ -176,14 +182,18 @@ const PosModule = {
 
     if (this.cart.length === 0) {
       container.innerHTML = `
-        <div class="cart-empty-state">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <p style="font-weight: 700; font-size: 1.05rem; color: var(--text-main);">Cart is Empty</p>
-          <p style="font-size: 0.82rem; margin-top: 0.35rem;">Scan a medicine barcode using the camera or select from the quick test chips above to add items.</p>
+        <div class="cart-empty-compact">
+          <div class="empty-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+          </div>
+          <div class="empty-text-wrap">
+            <span class="empty-title">Current Bill is Empty</span>
+            <span class="empty-hint">Scan barcode or tap a sample medicine above</span>
+          </div>
         </div>
       `;
       this.updateTotals();
@@ -264,6 +274,17 @@ const PosModule = {
     if (subtotalEl) subtotalEl.textContent = `Rs. ${subtotal.toFixed(2)}`;
     if (discountEl) discountEl.textContent = `- Rs. ${discountAmount.toFixed(2)} (${this.discountPercent}%)`;
     if (grandTotalEl) grandTotalEl.textContent = `Rs. ${grandTotal.toFixed(2)}`;
+
+    // Sync with Mobile Sticky Bill Bar
+    const stickyCount = document.getElementById('sticky-bill-count');
+    const stickyTotal = document.getElementById('sticky-bill-total');
+    const stickyBar = document.getElementById('mobile-sticky-checkout-bar');
+
+    if (stickyCount) stickyCount.textContent = `${this.cart.length} item(s)`;
+    if (stickyTotal) stickyTotal.textContent = `Rs. ${grandTotal.toFixed(2)}`;
+    if (stickyBar) {
+      stickyBar.style.display = this.cart.length > 0 ? 'flex' : 'none';
+    }
   },
 
   processCheckout(action = 'whatsapp') {
